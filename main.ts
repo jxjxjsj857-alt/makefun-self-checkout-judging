@@ -8,9 +8,13 @@ const LINE =
   "Please place your twelve yogurts in the bagging area. One by one. I have all day. You clearly do too.";
 
 // The gate only accepts UTF-8 text of 1 to 200 characters, not only
-// whitespace. Fail loudly instead of writing an entry that cannot win.
+// whitespace, and the judge reads a single line: fail loudly instead
+// of writing an entry that cannot win.
 if (LINE.trim().length === 0 || LINE.length > 200) {
   throw new Error(`Line must be 1-200 characters, got ${LINE.length}.`);
+}
+if (LINE.includes("\n")) {
+  throw new Error("Line must be a single line, no line breaks allowed.");
 }
 
 mkdirSync("/output", { recursive: true });
